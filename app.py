@@ -44,8 +44,8 @@ def bipolar_ami_encoding(binary_input, initial_high):
     for bit in binary_input:
         x_values.extend([time, time + 1])
         if bit == '1':
-            y_values.extend([last_level, last_level])
             last_level = -last_level
+            y_values.extend([last_level, last_level])
         else:
             y_values.extend([0, 0])
         time += 1
@@ -64,8 +64,8 @@ def pseudoternary_encoding(binary_input, initial_high):
     for bit in binary_input:
         x_values.extend([time, time + 1])
         if bit == '0':
-            y_values.extend([last_level, last_level])
             last_level = -last_level
+            y_values.extend([last_level, last_level])
         else:
             y_values.extend([0, 0])
         time += 1
@@ -113,7 +113,7 @@ st.title("Digital Signal Encoding Techniques Visualizer")
 
 binary_input = st.text_input("Enter a binary sequence (up to 16 bits): ")
 initial_level_input = st.selectbox(
-    "Please choose the Initial state for Bipolar & Pseudoternary, Previous state for NRZ-I & Differential Manchester:",
+    "Please input initial state:",
     options=["high", "low"]
 )
 
@@ -137,6 +137,10 @@ if st.button("Generate Encodings"):
             ax.set(title=encoding_name)
             ax.grid(True)
             ax.set_ylim(-2, 2)
+
+            for i, bit in enumerate(binary_input):
+                ax.text(i + 0.5, 1.5, bit, ha='center', va='center', fontsize=12, fontweight='bold')
+
             st.pyplot(fig)
     else:
         st.error("Invalid input. Please enter a binary sequence up to 16 bits containing only '0' and '1'.")
